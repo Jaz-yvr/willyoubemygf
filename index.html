@@ -6,6 +6,7 @@
     <style>
       body {
         height: 100vh;
+        margin: 0;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -18,12 +19,7 @@
       h1 {
         font-size: 2.5rem;
         margin-bottom: 40px;
-      }
-
-      .buttons {
-        position: relative;
-        width: 300px;
-        height: 200px;
+        text-align: center;
       }
 
       button {
@@ -33,50 +29,58 @@
         border-radius: 10px;
         cursor: pointer;
         position: absolute;
+        transition:
+          left 0.08s linear,
+          top 0.08s linear;
       }
 
       #yes {
         background-color: #ff4d6d;
         color: white;
-        left: 50px;
-        top: 80px;
+        left: 40%;
+        top: 55%;
       }
 
       #no {
         background-color: #555;
         color: white;
-        left: 180px;
-        top: 80px;
+        left: 55%;
+        top: 55%;
       }
     </style>
   </head>
   <body>
     <h1>Will you be my girlfriend? 💕</h1>
 
-    <div class="buttons">
-      <button id="yes" onclick="sayYes()">Yes 💖</button>
-      <button id="no" onmouseover="moveNo()">No 😢</button>
-    </div>
+    <button id="yes" onclick="sayYes()">Yes 💖</button>
+    <button id="no" onmouseover="moveNo()">No 😢</button>
 
     <script>
       function moveNo() {
         const noBtn = document.getElementById("no");
-        const container = document.querySelector(".buttons");
 
-        const maxX = container.clientWidth - noBtn.offsetWidth;
-        const maxY = container.clientHeight - noBtn.offsetHeight;
+        let x, y;
+        const minDistance = 300; // BIG jump distance
 
-        const randomX = Math.random() * maxX;
-        const randomY = Math.random() * maxY;
+        do {
+          x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+          y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        } while (
+          Math.abs(x - noBtn.offsetLeft) < minDistance &&
+          Math.abs(y - noBtn.offsetTop) < minDistance
+        );
 
-        noBtn.style.left = randomX + "px";
-        noBtn.style.top = randomY + "px";
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
       }
 
       function sayYes() {
         document.body.innerHTML = `
         <h1>YAYYYYY 💖🥰</h1>
-        <p style="font-size:1.5rem;">Best decision ever 😘</p>
+        <p style="font-size:1.6rem; text-align:center;">
+          You just made me the happiest person ever 😘<br>
+          I love you ❤️
+        </p>
       `;
       }
     </script>
